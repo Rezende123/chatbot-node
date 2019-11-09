@@ -86,12 +86,13 @@ function detecçãoDoDelito(message) {
         response = response.concat([saldacao()]);
     } 
     
-    response = response.concat(["Oxe, onde foi que aconteceu isso?"]);
     
     if (furto(message)) {
         delito = "FURTO";
+        response = response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else if (assalto(message)) {
         delito = "ROUBO";
+        response = response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else {
         return response.concat(["A gente não entendeu muito não, tenta explicar de outra forma"]);
     }
@@ -149,15 +150,58 @@ function disseLocal(message) {
 }
 
 function furto(message) {
-    return (message.search(/furt/i) >= 0) ||
-    (message.search(/não vi/i) >= 0) ||
-    (message.search(/nem vi/i) >= 0);
+    const possibilities = [
+        /furt/i,
+        /não vi/i,
+        /nem vi/i
+    ];
+    let res = false;
+
+    possibilities.forEach(pos => {        
+        if (message.search(pos) >= 0) {
+            res = true;
+        }
+    });
+
+    return res;
 }
 
 function assalto(message) {
-    return (message.search(/assalt/i) >= 0) ||
-    (message.search(/arma/i) >= 0) ||
-    (message.search(/ameaç/i) >= 0) ||
-    (message.search(/roub/i) >= 0) ||
-    (message.search(/tiro/i) >= 0);
+    const possibilities = [
+        /assalt/i,
+        /arma/i,
+        /ameaç/i,
+        /roub/i,
+        /tiro/i,
+    ];
+    let res = false;
+
+    possibilities.forEach(pos => {        
+        if (message.search(pos) >= 0) {
+            console.log("asdadasdas")
+            res = true;
+        }
+    });
+
+    return res;
+}
+
+function contraMulher(message) {
+    const possibilities = [
+        /marido/i,
+        /namorado/i,
+        /ex-/i,
+        /chefe/i,
+        /patrão/i,
+        /homem/i,
+    ];
+    let res = false;
+
+    possibilities.forEach(pos => {        
+        if (message.search(pos) >= 0) {
+            res = true;
+        }
+    });
+
+    return res;
 }
