@@ -81,6 +81,9 @@ function detecçãoDoDelito(message) {
     if (furto(message)) {
         delito = "FURTO";
         return response.concat(["Oxe, onde foi que aconteceu isso?"]);
+    } else if (assalto(message)) {
+        delito = "ROUBO";
+        return response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else {
         return response.concat(["A gente não entendeu muito não, tenta explicar de outra forma"]);
     }
@@ -140,4 +143,12 @@ function furto(message) {
     return (message.search(/furt/i) >= 0) ||
     (message.search(/não vi/i) >= 0) ||
     (message.search(/nem vi/i) >= 0);
+}
+
+function assalto(message) {
+    return (message.search(/assalt/i) >= 0) ||
+    (message.search(/arma/i) >= 0) ||
+    (message.search(/ameaç/i) >= 0) ||
+    (message.search(/roub/i) >= 0) ||
+    (message.search(/tiro/i) >= 0);
 }
