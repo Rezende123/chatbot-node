@@ -10,7 +10,6 @@ module.exports = function conversation(message) {
         response = criaScenario(message);
 
         if (hasScenario) {
-            console.log("has");
             response = response.concat(imprimeCenario());
         }
     }
@@ -20,8 +19,8 @@ module.exports = function conversation(message) {
 
 function imprimeCenario() {
     return [
-        "Vamos recaptular",
-        `O ${delito} foi ${local}, no período ${turno}`
+        "Vamos revisar",
+        `O ${delito} ${local}, no período ${turno}`
     ];
 }
 
@@ -81,28 +80,28 @@ function detecçãoDoDelito(message) {
 
     if (furto(message)) {
         delito = "FURTO";
-        return response.concat(["Vish, onde foi que aconteceu isso?"]);
+        return response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else {
-        return response.concat(["Infelizmente a gente não entendeu o acontecido, poderia explicar de outra forma?"]);
+        return response.concat(["A gente não entendeu muito não, tenta explicar de outra forma"]);
     }
 
 }
 
 
 function detecçãoDoLocal(message) {
-    disseLocal(message);
     let response = [
         "Pronto", 
-        "Agora precisamos saber em que turno ocorreu",
-        "Se foi pela manhã, tarde ou noite"
+        "Agora precisamos saber se foi pela manhã, tarde ou noite"
     ];
 
-    if (!local) {
-        _local = message.split(" ");
+    _local = message.split(" ");
 
-        if (_local && _local.length <= 3) {
-            local = _local;
-        } else {
+    if (_local && _local.length <= 2) {
+        local = message;
+    } else {
+        disseLocal(message);
+
+        if (!local) {
             response = [
                 "Desculpa",
                 "Nós queremos muito te ajudar",
@@ -116,15 +115,15 @@ function detecçãoDoLocal(message) {
 
 function disseLocal(message) {
     const possibilities = [
-        "foi no",
-        "foi em",
-        "naquela",
-        "fui ao",
-        "aqui em",
-        "aqui no",
-        "aqui",
-        "eu tava na",
-        "eu estava na",
+        /foi no/i,
+        /foi em/i,
+        /naquela/i,
+        /fui ao/i,
+        /aqui em/i,
+        /aqui no/i,
+        /aqui/i,
+        /eu tava na/i,
+        /eu estava na/i,
     ]
 
     possibilities.forEach(pos => {
