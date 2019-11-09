@@ -4,13 +4,17 @@ let turno;
 let hasScenario = false;
 let isFirst = true;
 
+const getSolution = require('./mock');
+
 module.exports = function conversation(message) {
 
     if (!hasScenario) {
         response = criaScenario(message);
 
         if (hasScenario) {
-            response = response.concat(imprimeCenario());
+            response = response
+                .concat(imprimeCenario())
+                .concat(getSolution(delito, turno, local));
         }
     }
 
@@ -20,9 +24,11 @@ module.exports = function conversation(message) {
 function imprimeCenario() {
     return [
         "Vamos revisar",
-        `O ${delito} ${local}, durante a ${turno}`
+        `O ${delito} no(a) ${local}, durante a ${turno}`
     ];
 }
+
+
 
 function criaScenario(message) {
     let response = "Calma, você poderia tentar descrever de outra forma?";
@@ -173,27 +179,6 @@ function assalto(message) {
         /ameaç/i,
         /roub/i,
         /tiro/i,
-    ];
-    let res = false;
-
-    possibilities.forEach(pos => {        
-        if (message.search(pos) >= 0) {
-            console.log("asdadasdas")
-            res = true;
-        }
-    });
-
-    return res;
-}
-
-function contraMulher(message) {
-    const possibilities = [
-        /marido/i,
-        /namorado/i,
-        /ex-/i,
-        /chefe/i,
-        /patrão/i,
-        /homem/i,
     ];
     let res = false;
 
