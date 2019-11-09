@@ -20,7 +20,7 @@ module.exports = function conversation(message) {
 function imprimeCenario() {
     return [
         "Vamos revisar",
-        `O ${delito} ${local}, no período ${turno}`
+        `O ${delito} ${local}, durante a ${turno}`
     ];
 }
 
@@ -68,6 +68,14 @@ function detecçãoDoTurno(message) {
         turno = "TARDE";
     } else if (message.search(/noite/i) >= 0) {
         turno = "NOITE";
+    } else if (message.search(/agora/i) >= 0) {
+        if (new Date().getHours() < 12 && new Date().getHours() > 3) {
+            turno = "MANHÃ";
+        } else if (new Date().getHours() < 18) {
+            turno = "TARDE";
+        } else {
+            turno = "NOITE";
+        }
     }
 }
 
