@@ -77,17 +77,18 @@ function detecçãoDoDelito(message) {
     if (isFirst) {
         response = response.concat([saldacao()]);
     } 
-
+    
+    response = response.concat(["Oxe, onde foi que aconteceu isso?"]);
+    
     if (furto(message)) {
         delito = "FURTO";
-        return response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else if (assalto(message)) {
         delito = "ROUBO";
-        return response.concat(["Oxe, onde foi que aconteceu isso?"]);
     } else {
         return response.concat(["A gente não entendeu muito não, tenta explicar de outra forma"]);
     }
 
+    return response;
 }
 
 
